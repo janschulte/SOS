@@ -35,12 +35,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
+import org.n52.iceland.coding.encode.OperationResponseEncoderKey;
 import org.n52.sos.coding.CodingRepository;
 import org.n52.sos.convert.RequestResponseModifier;
 import org.n52.sos.convert.RequestResponseModifierFacilitator;
 import org.n52.sos.convert.RequestResponseModifierKeyType;
 import org.n52.sos.encode.ObservationEncoder;
-import org.n52.sos.encode.OperationEncoderKey;
 import org.n52.sos.encode.XmlEncoderKey;
 import org.n52.sos.exception.ows.NoApplicableCodeException;
 import org.n52.sos.ogc.gml.CodeWithAuthority;
@@ -339,7 +339,7 @@ public class SplitMergeObservations
             if (encoder == null && response.isSetContentType()) {
                 encoder =
                         (ObservationEncoder<Object, Object>) CodingRepository.getInstance().getEncoder(
-                                new OperationEncoderKey(response.getService(), response.getVersion(), response
+                                new OperationResponseEncoderKey(response.getService(), response.getVersion(), response
                                         .getOperationName(), response.getContentType()));
             }
             // check for responseFormat as MediaType
@@ -347,7 +347,7 @@ public class SplitMergeObservations
                 try {
                     encoder =
                             (ObservationEncoder<Object, Object>) CodingRepository.getInstance().getEncoder(
-                                    new OperationEncoderKey(response.getService(), response.getVersion(), response
+                                    new OperationResponseEncoderKey(response.getService(), response.getVersion(), response
                                             .getOperationName(), MediaType.parse(response.getResponseFormat())));
                 } catch (IllegalArgumentException iae) {
                     LOGGER.debug("ResponseFormat isNot a XML response format");

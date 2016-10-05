@@ -98,7 +98,7 @@ public class AbstractServiceResponseWriter extends AbstractResponseWriter<Abstra
         OperationEncoderKey key = getEncoderKey(asr); 
         Encoder<Object, AbstractServiceResponse> encoder = getEncoder(key);
         if (encoder == null) {
-            throw new NoEncoderForKeyException(new OperationEncoderKey(asr.getOperationKey(),
+            throw new NoEncoderForKeyException(new OperationResponseEncoderKey(asr.getOperationKey(),
                     getContentType()));
         }
         return encoder;
@@ -106,7 +106,7 @@ public class AbstractServiceResponseWriter extends AbstractResponseWriter<Abstra
 
     private OperationEncoderKey getEncoderKey(AbstractServiceResponse asr) {
         if (asr instanceof AbstractOperationResponse && ((AbstractOperationResponse) asr).isSetOperationVersion()) {
-            return new VersionedOperationEncoderKey(asr.getOperationKey(), getEncodedContentType(asr), ((AbstractOperationResponse) asr).getOperationVersion());
+            return new VersionedOperationResponseEncoderKey(asr.getOperationKey(), getEncodedContentType(asr), ((AbstractOperationResponse) asr).getOperationVersion());
         } else {
             return new OperationResponseEncoderKey(asr.getOperationKey(), getEncodedContentType(asr));
         }

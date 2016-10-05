@@ -30,7 +30,7 @@ package org.n52.sos.encode.json;
 
 import org.n52.sos.coding.json.JSONConstants;
 import org.n52.sos.util.JSONUtils;
-import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.ogc.ows.OwsExceptionReport;
 import org.n52.sos.ogc.sos.Sos2Constants;
 import org.n52.sos.ogc.sos.SosConstants;
@@ -49,7 +49,7 @@ import com.fasterxml.jackson.databind.node.ObjectNode;
  */
 public abstract class AbstractSosResponseEncoder<T extends AbstractServiceResponse> extends JSONEncoder<T> {
     public AbstractSosResponseEncoder(Class<T> type, String operation) {
-        super(type, new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION, operation,
+        super(type, new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION, operation,
                 MediaTypes.APPLICATION_JSON));
     }
 

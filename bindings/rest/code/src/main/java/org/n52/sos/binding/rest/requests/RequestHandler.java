@@ -41,6 +41,7 @@ import org.apache.xmlbeans.XmlObject;
 import org.n52.sos.binding.rest.Constants;
 import org.n52.sos.encode.Encoder;
 import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.exception.ows.NoApplicableCodeException;
 import org.n52.sos.exception.ows.concrete.EncoderResponseUnsupportedException;
 import org.n52.sos.exception.ows.concrete.NoEncoderForKeyException;
@@ -147,7 +148,7 @@ public abstract class RequestHandler {
 
     private XmlObject encodeResponse(AbstractServiceResponse response)
             throws OwsExceptionReport {
-        OperationEncoderKey key = new OperationEncoderKey(
+        OperationEncoderKey key = new OperationResponseEncoderKey(
                 response.getOperationKey(), MediaTypes.TEXT_XML);
         Encoder<XmlObject, AbstractServiceResponse> encoder =
                 CodingRepository.getInstance().getEncoder(key);

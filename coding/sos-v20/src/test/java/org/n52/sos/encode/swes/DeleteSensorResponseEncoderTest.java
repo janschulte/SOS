@@ -52,6 +52,7 @@ import org.n52.sos.coding.CodingRepository;
 import org.n52.sos.config.SettingsManager;
 import org.n52.sos.encode.EncoderKey;
 import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.encode.XmlEncoderKey;
 import org.n52.sos.exception.ows.concrete.UnsupportedEncoderInputException;
 import org.n52.sos.ogc.ows.OwsExceptionReport;
@@ -87,9 +88,9 @@ public class DeleteSensorResponseEncoderTest {
         Set<EncoderKey> returnedKeySet = new DeleteSensorResponseEncoder().getEncoderKeyType();
         assertThat(returnedKeySet.size(), is(3));
         assertThat(returnedKeySet, hasItem(new XmlEncoderKey(SwesConstants.NS_SWES_20, DeleteSensorResponse.class)));
-        assertThat(returnedKeySet, hasItem(new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+        assertThat(returnedKeySet, hasItem(new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                 Sos2Constants.Operations.DeleteSensor, MediaTypes.TEXT_XML)));
-        assertThat(returnedKeySet, hasItem(new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+        assertThat(returnedKeySet, hasItem(new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                 Sos2Constants.Operations.DeleteSensor, MediaTypes.APPLICATION_XML)));
     }
 

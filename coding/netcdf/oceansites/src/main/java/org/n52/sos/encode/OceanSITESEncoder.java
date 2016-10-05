@@ -38,7 +38,6 @@ import java.util.Set;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.n52.sos.encode.EncoderKey;
-import org.n52.sos.encode.OperationEncoderKey;
 import org.n52.sos.exception.CodedException;
 import org.n52.sos.exception.ows.NoApplicableCodeException;
 import org.n52.sos.exception.ows.concrete.UnsupportedEncoderInputException;
@@ -84,17 +83,17 @@ private static final Logger LOGGER = LoggerFactory.getLogger(OceanSITESEncoder.c
             .build());
 
     private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet(
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_OCEANSITES),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_3_OCEANSITES),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_4_OCEANSITES),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_OCEANSITES),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_3_OCEANSITES),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, OceanSITESConstants.CONTENT_TYPE_NETCDF_4_OCEANSITES));
     
     public OceanSITESEncoder() {

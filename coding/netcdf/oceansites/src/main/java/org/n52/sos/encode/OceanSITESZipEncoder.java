@@ -41,7 +41,6 @@ import java.util.zip.ZipOutputStream;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
 import org.n52.sos.encode.EncoderKey;
-import org.n52.sos.encode.OperationEncoderKey;
 import org.n52.sos.exception.ows.NoApplicableCodeException;
 import org.n52.sos.netcdf.data.dataset.AbstractSensorDataset;
 import org.n52.sos.netcdf.oceansites.OceanSITESConstants;
@@ -86,17 +85,17 @@ public class OceanSITESZipEncoder extends AbstractOceanSITESEncoder {
                     .put(Sos1Constants.SERVICEVERSION, MEDIA_TYPES).put(Sos2Constants.SERVICEVERSION, MEDIA_TYPES)
                     .build());
 
-    private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet((EncoderKey) new OperationEncoderKey(
+    private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet((EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            OceanSITESConstants.CONTENT_TYPE_NETCDF_ZIP_OCEANSITES), (EncoderKey) new OperationEncoderKey(
+            OceanSITESConstants.CONTENT_TYPE_NETCDF_ZIP_OCEANSITES), (EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            OceanSITESConstants.CONTENT_TYPE_NETCDF_3_ZIP_OCEANSITES), (EncoderKey) new OperationEncoderKey(
+            OceanSITESConstants.CONTENT_TYPE_NETCDF_3_ZIP_OCEANSITES), (EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            OceanSITESConstants.CONTENT_TYPE_NETCDF_4_ZIP_OCEANSITES), (EncoderKey) new OperationEncoderKey(
+            OceanSITESConstants.CONTENT_TYPE_NETCDF_4_ZIP_OCEANSITES), (EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            OceanSITESConstants.CONTENT_TYPE_NETCDF_ZIP_OCEANSITES), (EncoderKey) new OperationEncoderKey(
+            OceanSITESConstants.CONTENT_TYPE_NETCDF_ZIP_OCEANSITES), (EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            OceanSITESConstants.CONTENT_TYPE_NETCDF_3_ZIP_OCEANSITES), (EncoderKey) new OperationEncoderKey(
+            OceanSITESConstants.CONTENT_TYPE_NETCDF_3_ZIP_OCEANSITES), (EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
             OceanSITESConstants.CONTENT_TYPE_NETCDF_4_ZIP_OCEANSITES));
 

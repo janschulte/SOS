@@ -33,25 +33,25 @@ import org.n52.sos.util.http.MediaType;
 
 import com.google.common.base.Objects;
 
-public class VersionedOperationEncoderKey extends OperationResponseEncoderKey implements EncoderKey {
+public class VersionedOperationResponseEncoderKey extends OperationResponseEncoderKey implements EncoderKey {
     private final String operationVersion;
 
-    public VersionedOperationEncoderKey(String service, String version, String operation, MediaType contentType, String operationVersion) {
+    public VersionedOperationResponseEncoderKey(String service, String version, String operation, MediaType contentType, String operationVersion) {
         super(service, version, operation, contentType);
         this.operationVersion = operationVersion;
     }
 
-    public VersionedOperationEncoderKey(String service, String version, Enum<?> operation, MediaType contentType, String operationVersion) {
+    public VersionedOperationResponseEncoderKey(String service, String version, Enum<?> operation, MediaType contentType, String operationVersion) {
         super(service, version, operation, contentType);
         this.operationVersion = operationVersion;
     }
 
-    public VersionedOperationEncoderKey(OperationKey key, MediaType contentType, String operationVersion) {
+    public VersionedOperationResponseEncoderKey(OperationKey key, MediaType contentType, String operationVersion) {
         super(key, contentType);
         this.operationVersion = operationVersion;
     }
     
-    public VersionedOperationEncoderKey(VersionedOperationEncoderKey key, MediaType contentType) {
+    public VersionedOperationResponseEncoderKey(VersionedOperationResponseEncoderKey key, MediaType contentType) {
         super(key, contentType);
         this.operationVersion = key.getOperationVersion();
     }
@@ -75,7 +75,7 @@ public class VersionedOperationEncoderKey extends OperationResponseEncoderKey im
     public boolean equals(Object obj) {
         super.equals(obj);
         if (obj != null && getClass() == obj.getClass()) {
-            final VersionedOperationEncoderKey other = (VersionedOperationEncoderKey) obj;
+            final VersionedOperationResponseEncoderKey other = (VersionedOperationResponseEncoderKey) obj;
             return super.equals(obj) 
                     && getOperationVersion() != null
                     && getOperationVersion().equals(other.getOperationVersion());

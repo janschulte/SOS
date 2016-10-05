@@ -43,6 +43,7 @@ import org.n52.sos.encode.Encoder;
 import org.n52.sos.encode.EncoderKey;
 import org.n52.sos.encode.ExceptionEncoderKey;
 import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.event.SosEventBus;
 import org.n52.sos.event.events.ExceptionEvent;
 import org.n52.sos.exception.HTTPException;
@@ -143,7 +144,7 @@ public abstract class SimpleBinding extends Binding {
     }
 
     protected boolean hasEncoder(OperationKey key, MediaType mediaType) {
-        return hasEncoder(new OperationEncoderKey(key, mediaType));
+        return hasEncoder(new OperationResponseEncoderKey(key, mediaType));
     }
 
     protected boolean hasEncoder(AbstractServiceResponse response, MediaType mediaType) {
@@ -281,7 +282,7 @@ public abstract class SimpleBinding extends Binding {
     }
 
     protected Object encodeResponse(AbstractServiceResponse response, MediaType contentType) throws OwsExceptionReport {
-        OperationEncoderKey key = new OperationEncoderKey(response.getOperationKey(), contentType);
+        OperationEncoderKey key = new OperationResponseEncoderKey(response.getOperationKey(), contentType);
         Encoder<Object, AbstractServiceResponse> encoder = CodingRepository.getInstance().getEncoder(key);
         if (encoder == null) {
             throw new NoEncoderForKeyException(key);

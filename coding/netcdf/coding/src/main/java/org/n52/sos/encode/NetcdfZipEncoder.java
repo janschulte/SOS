@@ -85,17 +85,17 @@ public class NetcdfZipEncoder extends AbstractBasicNetcdfEncoder {
                     .put(Sos1Constants.SERVICEVERSION, MEDIA_TYPES).put(Sos2Constants.SERVICEVERSION, MEDIA_TYPES)
                     .build());
 
-    private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet((EncoderKey) new OperationEncoderKey(
+    private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet((EncoderKey) new OperationResponseEncoderKey(
             SosConstants.SOS, Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            NetcdfConstants.CONTENT_TYPE_NETCDF_ZIP), (EncoderKey) new OperationEncoderKey(SosConstants.SOS,
+            NetcdfConstants.CONTENT_TYPE_NETCDF_ZIP), (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS,
             Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            NetcdfConstants.CONTENT_TYPE_NETCDF_3_ZIP), (EncoderKey) new OperationEncoderKey(SosConstants.SOS,
+            NetcdfConstants.CONTENT_TYPE_NETCDF_3_ZIP), (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS,
             Sos1Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            NetcdfConstants.CONTENT_TYPE_NETCDF_4_ZIP), (EncoderKey) new OperationEncoderKey(SosConstants.SOS,
+            NetcdfConstants.CONTENT_TYPE_NETCDF_4_ZIP), (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS,
             Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            NetcdfConstants.CONTENT_TYPE_NETCDF_ZIP), (EncoderKey) new OperationEncoderKey(SosConstants.SOS,
+            NetcdfConstants.CONTENT_TYPE_NETCDF_ZIP), (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS,
             Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
-            NetcdfConstants.CONTENT_TYPE_NETCDF_3_ZIP), (EncoderKey) new OperationEncoderKey(SosConstants.SOS,
+            NetcdfConstants.CONTENT_TYPE_NETCDF_3_ZIP), (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS,
             Sos2Constants.SERVICEVERSION, SosConstants.Operations.GetObservation,
             NetcdfConstants.CONTENT_TYPE_NETCDF_4_ZIP));
 

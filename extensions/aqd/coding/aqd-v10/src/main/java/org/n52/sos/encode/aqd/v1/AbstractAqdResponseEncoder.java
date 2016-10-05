@@ -42,6 +42,7 @@ import org.n52.sos.encode.AbstractResponseEncoder;
 import org.n52.sos.encode.Encoder;
 import org.n52.sos.encode.EncoderKey;
 import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.exception.CodedException;
 import org.n52.sos.exception.ows.concrete.NoEncoderForKeyException;
 import org.n52.sos.inspire.aqd.EReportingHeader;
@@ -133,10 +134,10 @@ public abstract class AbstractAqdResponseEncoder<T extends AbstractServiceRespon
      * @return {@link Encoder} for the {@link AbstractServiceResponse}
      */
     protected Encoder<Object, AbstractServiceResponse> getEncoder(AbstractServiceResponse asr) {
-        OperationEncoderKey key = new OperationEncoderKey(asr.getOperationKey(), getContentType());
+        OperationEncoderKey key = new OperationResponseEncoderKey(asr.getOperationKey(), getContentType());
         Encoder<Object, AbstractServiceResponse> encoder = getEncoder(key);
         if (encoder == null) {
-            throw new RuntimeException(new NoEncoderForKeyException(new OperationEncoderKey(asr.getOperationKey(),
+            throw new RuntimeException(new NoEncoderForKeyException(new OperationResponseEncoderKey(asr.getOperationKey(),
                     getContentType())));
         }
         return encoder;

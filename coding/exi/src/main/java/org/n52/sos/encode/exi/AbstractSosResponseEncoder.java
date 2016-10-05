@@ -38,6 +38,7 @@ import org.n52.sos.coding.OperationKey;
 import org.n52.sos.encode.Encoder;
 import org.n52.sos.encode.EncoderKey;
 import org.n52.sos.encode.OperationEncoderKey;
+import org.n52.sos.encode.OperationResponseEncoderKey;
 import org.n52.sos.encode.streaming.StreamingDataEncoder;
 import org.n52.sos.exception.ows.concrete.NoEncoderForKeyException;
 import org.n52.sos.exception.ows.concrete.UnsupportedEncoderInputException;
@@ -85,7 +86,7 @@ public class AbstractSosResponseEncoder<T extends AbstractServiceResponse> imple
      */
     public AbstractSosResponseEncoder(Class<T> type, String operation, String version) {
         OperationKey key = new OperationKey(SosConstants.SOS, version, operation);
-        this.encoderKeys = Sets.newHashSet((EncoderKey) new OperationEncoderKey(key, MediaTypes.APPLICATION_EXI));
+        this.encoderKeys = Sets.newHashSet((EncoderKey) new OperationResponseEncoderKey(key, MediaTypes.APPLICATION_EXI));
         LOGGER.debug("Encoder for the following keys initialized successfully: {}!", Joiner.on(", ").join(encoderKeys));
     }
 
@@ -163,10 +164,10 @@ public class AbstractSosResponseEncoder<T extends AbstractServiceResponse> imple
      * @return {@link Encoder} for the {@link AbstractServiceResponse}
      */
     protected Encoder<Object, AbstractServiceResponse> getEncoder(AbstractServiceResponse asr) {
-        OperationEncoderKey key = new OperationEncoderKey(asr.getOperationKey(), getEncodedContentType(asr));
+        OperationEncoderKey key = new OperationResponseEncoderKey(asr.getOperationKey(), getEncodedContentType(asr));
         Encoder<Object, AbstractServiceResponse> encoder = getEncoder(key);
         if (encoder == null) {
-            throw new RuntimeException(new NoEncoderForKeyException(new OperationEncoderKey(asr.getOperationKey(),
+            throw new RuntimeException(new NoEncoderForKeyException(new OperationResponseEncoderKey(asr.getOperationKey(),
                     MediaTypes.APPLICATION_XML)));
         }
         return encoder;

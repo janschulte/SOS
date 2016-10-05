@@ -46,7 +46,7 @@ import java.util.Set;
 import org.junit.BeforeClass;
 import org.junit.Test;
 import org.n52.sos.encode.EncoderKey;
-import org.n52.sos.encode.VersionedOperationEncoderKey;
+import org.n52.sos.encode.VersionedOperationResponseEncoderKey;
 import org.n52.sos.encode.XmlEncoderKey;
 import org.n52.sos.exception.ows.concrete.UnsupportedEncoderInputException;
 import org.n52.sos.ext.deleteobservation.DeleteObservationConstants;
@@ -106,12 +106,12 @@ public class DeleteObservationEncoderTest {
         EncoderKey key = new XmlEncoderKey(NS_SOSDO_2_0, DeleteObservationResponse.class);
         assertTrue("DecoderKeyTypes does NOT contain " + key, instance.getEncoderKeyType().contains(key));
         key =
-                new VersionedOperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+                new VersionedOperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                         DeleteObservationConstants.Operations.DeleteObservation, MediaTypes.TEXT_XML, 
                         DeleteObservationConstants.NS_SOSDO_2_0);
         assertTrue("DecoderKeyTypes does NOT contain " + key, instance.getEncoderKeyType().contains(key));
         key =
-                new VersionedOperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+                new VersionedOperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                         DeleteObservationConstants.Operations.DeleteObservation, MediaTypes.APPLICATION_XML,
                         DeleteObservationConstants.NS_SOSDO_2_0);
         assertTrue("DecoderKeyTypes does NOT contain " + key, instance.getEncoderKeyType().contains(key));

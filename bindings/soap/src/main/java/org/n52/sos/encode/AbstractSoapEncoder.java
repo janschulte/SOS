@@ -186,7 +186,7 @@ public abstract class AbstractSoapEncoder<T, S> implements Encoder<T, S>, Consta
             return response.getSoapBodyContent();
         }
         OperationEncoderKey key =
-                new OperationEncoderKey(response.getBodyContent().getOperationKey(), MediaTypes.APPLICATION_XML);
+                new OperationResponseEncoderKey(response.getBodyContent().getOperationKey(), MediaTypes.APPLICATION_XML);
         Encoder<Object, AbstractServiceResponse> encoder = CodingRepository.getInstance().getEncoder(key);
         if (encoder == null) {
             throw new NoEncoderForKeyException(key);

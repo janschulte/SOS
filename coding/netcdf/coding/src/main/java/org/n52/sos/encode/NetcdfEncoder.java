@@ -81,17 +81,17 @@ public class NetcdfEncoder extends AbstractBasicNetcdfEncoder{
             .build());
 
     private final Set<EncoderKey> ENCODER_KEYS = Sets.newHashSet(
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF_3),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos1Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF_4),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF_3),
-          (EncoderKey) new OperationEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
+          (EncoderKey) new OperationResponseEncoderKey(SosConstants.SOS, Sos2Constants.SERVICEVERSION,
                   SosConstants.Operations.GetObservation, NetcdfConstants.CONTENT_TYPE_NETCDF_4));
     
     public NetcdfEncoder() {

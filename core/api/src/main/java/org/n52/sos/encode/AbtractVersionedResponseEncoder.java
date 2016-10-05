@@ -62,14 +62,13 @@ public abstract class AbtractVersionedResponseEncoder<T extends AbstractServiceR
      * @param validationEnabled
      *            Indicator if the created/encoded object can be validated
      */
-    @SuppressWarnings("unchecked")
     public AbtractVersionedResponseEncoder(String service, String version, String operation, String namespace, String prefix,
             Class<T> responseType, boolean validationEnabled, String operationVersion) {
         super(service, version, operationVersion, namespace, prefix, responseType, validationEnabled);
         OperationKey key = new OperationKey(service, version, operation);
         this.encoderKeys = Sets.newHashSet(new XmlEncoderKey(namespace, responseType),
-                new VersionedOperationEncoderKey(key, MediaTypes.TEXT_XML, operationVersion),
-                new VersionedOperationEncoderKey(key, MediaTypes.APPLICATION_XML, operationVersion));
+                new VersionedOperationResponseEncoderKey(key, MediaTypes.TEXT_XML, operationVersion),
+                new VersionedOperationResponseEncoderKey(key, MediaTypes.APPLICATION_XML, operationVersion));
         LOGGER.debug("Encoder for the following keys initialized successfully: {}!", Joiner.on(", ").join(encoderKeys));
     }
 
