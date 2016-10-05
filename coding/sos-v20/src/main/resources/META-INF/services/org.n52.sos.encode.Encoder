@@ -10,9 +10,12 @@ org.n52.sos.encode.swes.DescribeSensorResponseEncoder
 org.n52.sos.encode.swes.InsertSensorResponseEncoder
 org.n52.sos.encode.swes.UpdateSensorResponseEncoder
 org.n52.sos.encode.sos.v2.GetCapabilitiesResponseEncoder
+org.n52.sos.encode.sos.v2.GetCapabilitiesRequestEncoder
 org.n52.sos.encode.sos.v2.GetFeatureOfInterestResponseEncoder
+org.n52.sos.encode.sos.v2.GetFeatureOfInterestRequestEncoder
 org.n52.sos.encode.sos.v2.GetObservationByIdResponseEncoder
 org.n52.sos.encode.sos.v2.GetObservationResponseEncoder
+org.n52.sos.encode.sos.v2.GetObservationRequestEncoder
 org.n52.sos.encode.sos.v2.GetResultResponseEncoder
 org.n52.sos.encode.sos.v2.GetResultTemplateResponseEncoder
 org.n52.sos.encode.sos.v2.InsertObservationResponseEncoder

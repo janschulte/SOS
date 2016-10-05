@@ -33,7 +33,7 @@ import org.n52.sos.util.http.MediaType;
 
 import com.google.common.base.Objects;
 
-public class VersionedOperationEncoderKey extends OperationEncoderKey implements EncoderKey {
+public class VersionedOperationEncoderKey extends OperationResponseEncoderKey implements EncoderKey {
     private final String operationVersion;
 
     public VersionedOperationEncoderKey(String service, String version, String operation, MediaType contentType, String operationVersion) {

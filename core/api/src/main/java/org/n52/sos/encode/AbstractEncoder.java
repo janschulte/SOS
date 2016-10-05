@@ -28,67 +28,50 @@
  */
 package org.n52.sos.encode;
 
-import static org.n52.sos.service.ServiceSettings.VALIDATE_RESPONSE;
+import com.google.common.collect.Maps;
 
 import java.io.IOException;
 import java.io.OutputStream;
-import java.util.Collections;
 import java.util.EnumMap;
 import java.util.Map;
 import java.util.Set;
 
+
 import org.apache.xmlbeans.XmlObject;
 import org.apache.xmlbeans.XmlOptions;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import org.n52.sos.coding.CodingRepository;
-import org.n52.sos.coding.OperationKey;
-import org.n52.sos.config.annotation.Configurable;
 import org.n52.sos.config.annotation.Setting;
 import org.n52.sos.encode.streaming.StreamingEncoder;
 import org.n52.sos.exception.ows.NoApplicableCodeException;
 import org.n52.sos.exception.ows.concrete.UnsupportedEncoderInputException;
 import org.n52.sos.ogc.ows.OwsExceptionReport;
+import org.n52.sos.ogc.sos.SosConstants;
 import org.n52.sos.ogc.sos.SosConstants.HelperValues;
 import org.n52.sos.response.AbstractServiceResponse;
+import org.n52.sos.service.ServiceSettings;
 import org.n52.sos.util.N52XmlHelper;
 import org.n52.sos.util.XmlHelper;
 import org.n52.sos.util.XmlOptionsHelper;
-import org.n52.sos.util.http.MediaTypes;
 import org.n52.sos.w3c.SchemaLocation;
-
-import com.google.common.base.Joiner;
-import com.google.common.collect.Maps;
-import com.google.common.collect.Sets;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
- * TODO JavaDoc
+ * @author <a href="mailto:c.hollmann@52north.org">Carsten Hollmann</a>
+ * @since 5.0.0
+ *
  *
  * @param <T>
- *            the response type
- * @author Christian Autermann <c.autermann@52north.org>
- *
- * @since 4.0.0
  */
-@Configurable
-public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse> extends AbstractXmlEncoder<T>
-        implements StreamingEncoder<XmlObject, T> {
+public abstract class AbstractEncoder<T> extends AbstractXmlEncoder<T> implements StreamingEncoder<XmlObject, T> {
+
     private static final Logger LOGGER = LoggerFactory.getLogger(AbstractResponseEncoder.class);
 
-    private final Set<EncoderKey> encoderKeys;
-
     private final String namespace;
-
     private final String prefix;
-
     private final String version;
-
     private final Class<T> responseType;
-
-    private final boolean validationEnabled;
-    
-    private boolean validateResponse = false;
+    private boolean validate;
 
     /**
      * constructor
@@ -105,21 +88,15 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
      *            Service XML schema prefix
      * @param responseType
      *            Response type
-     * @param validationEnabled
-     *            Indicator if the created/encoded object can be validated
+     * @param validate
+     *            Indicator if the created/encoded object should be validated
      */
-    public AbstractResponseEncoder(String service, String version, String operation, String namespace, String prefix,
-            Class<T> responseType, boolean validationEnabled) {
-        OperationKey key = new OperationKey(service, version, operation);
-        this.encoderKeys =
-                Sets.newHashSet(new XmlEncoderKey(namespace, responseType), new OperationResponseEncoderKey(key,
-                        MediaTypes.TEXT_XML), new OperationResponseEncoderKey(key, MediaTypes.APPLICATION_XML));
-        LOGGER.debug("Encoder for the following keys initialized successfully: {}!", Joiner.on(", ").join(encoderKeys));
+    public AbstractEncoder(String service, String version, String operation, String namespace, String prefix, Class<T> responseType, boolean validate) {
         this.namespace = namespace;
         this.prefix = prefix;
         this.version = version;
         this.responseType = responseType;
-        this.validationEnabled = validationEnabled;
+        this.validate = validate;
     }
 
     /**
@@ -138,14 +115,13 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
      * @param responseType
      *            Response type
      */
-    public AbstractResponseEncoder(String service, String version, String operation, String namespace, String prefix,
-            Class<T> responseType) {
-        this(service, version, operation, namespace, prefix, responseType, true);
+    public AbstractEncoder(String service, String version, String operation, String namespace, String prefix, Class<T> responseType) {
+        this(service, version, operation, namespace, prefix, responseType, false);
     }
 
-    @Override
-    public Set<EncoderKey> getEncoderKeyType() {
-        return Collections.unmodifiableSet(encoderKeys);
+    @Setting(ServiceSettings.VALIDATE_RESPONSE)
+    public void setValidate(boolean validate) {
+        this.validate = validate;
     }
 
     @Override
@@ -160,8 +136,8 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
         if (response == null) {
             throw new UnsupportedEncoderInputException(this, response);
         }
-        final Map<HelperValues, String> additionalValues = new EnumMap<HelperValues, String>(HelperValues.class);
-        additionalValues.put(HelperValues.VERSION, this.version);
+        final Map<SosConstants.HelperValues, String> additionalValues = new EnumMap<>(SosConstants.HelperValues.class);
+        additionalValues.put(SosConstants.HelperValues.VERSION, this.version);
         return encode(response, additionalValues);
     }
 
@@ -172,41 +148,16 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
         }
         XmlObject xml = create(response);
         setSchemaLocations(xml);
-        if (validationEnabled) {
-            if (LOGGER.isDebugEnabled()) {
-                LOGGER.debug("Encoded object {} is valid: {}", xml.schemaType().toString(),
+        if (LOGGER.isDebugEnabled()) {
+            LOGGER.debug("Encoded object {} is valid: {}", xml.schemaType().toString(),
+                    XmlHelper.validateDocument(xml));
+        } else {
+            if (validate) {
+                LOGGER.warn("Encoded object {} is valid: {}", xml.schemaType().toString(),
                         XmlHelper.validateDocument(xml));
-            } else {
-                if (validateResponse) {
-                    LOGGER.warn("Encoded object {} is valid: {}", xml.schemaType().toString(),
-                            XmlHelper.validateDocument(xml));
-                }
             }
         }
         return xml;
-    }
-
-    @Override
-    public void encode(T element, OutputStream outputStream) throws OwsExceptionReport {
-        encode(element, outputStream, new EncodingValues());
-    }
-
-    @Override
-    public void encode(T response, OutputStream outputStream, EncodingValues encodingValues) throws OwsExceptionReport {
-        if (response == null) {
-            throw new UnsupportedEncoderInputException(this, response);
-        }
-        create(response, outputStream, encodingValues);
-    }
-    
-    @Override
-    public boolean forceStreaming() {
-    	return false;
-    }
-    
-    @Setting(VALIDATE_RESPONSE)
-    public void setValidateResponse(final boolean validateResponse) {
-        this.validateResponse = validateResponse;
     }
 
     private void setSchemaLocations(XmlObject document) {
@@ -224,10 +175,6 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
             schemaLocations.put(sl.getNamespace(), sl);
         }
         N52XmlHelper.setSchemaLocationsToDocument(document, schemaLocations.values());
-    }
-
-    protected XmlOptions getXmlOptions() {
-        return XmlOptionsHelper.getInstance().getXmlOptions();
     }
 
     /**
@@ -266,7 +213,7 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
     protected void create(T response, OutputStream outputStream, EncodingValues encodingValues)
             throws OwsExceptionReport {
         try {
-            XmlOptions xmlOptions = XmlOptionsHelper.getInstance().getXmlOptions();
+            XmlOptions xmlOptions = new XmlOptions(XmlOptionsHelper.getInstance().getXmlOptions());
             if (encodingValues.isEmbedded()) {
                 xmlOptions.setSaveNoXmlDecl();
             }
@@ -276,10 +223,6 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
             xmlObject.save(outputStream, xmlOptions);
         } catch (IOException ioe) {
             throw new NoApplicableCodeException().causedBy(ioe).withMessage("Error while writing element to stream!");
-        } finally {
-            if (encodingValues.isEmbedded()) {
-                XmlOptionsHelper.getInstance().getXmlOptions().remove(XmlOptions.SAVE_NO_XML_DECL);
-            }
         }
     }
 
@@ -294,7 +237,7 @@ public abstract class AbstractResponseEncoder<T extends AbstractServiceResponse>
      *             If an error occurs when writing to stream
      */
     protected void writeIndent(int level, OutputStream outputStream) throws IOException {
-        byte[] indent = new String("  ").getBytes();
+        byte[] indent = "  ".getBytes();
         for (int i = 0; i < level; i++) {
             outputStream.write(indent);
         }

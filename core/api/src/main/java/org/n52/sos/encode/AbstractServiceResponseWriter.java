@@ -108,7 +108,7 @@ public class AbstractServiceResponseWriter extends AbstractResponseWriter<Abstra
         if (asr instanceof AbstractOperationResponse && ((AbstractOperationResponse) asr).isSetOperationVersion()) {
             return new VersionedOperationEncoderKey(asr.getOperationKey(), getEncodedContentType(asr), ((AbstractOperationResponse) asr).getOperationVersion());
         } else {
-            return new OperationEncoderKey(asr.getOperationKey(), getEncodedContentType(asr));
+            return new OperationResponseEncoderKey(asr.getOperationKey(), getEncodedContentType(asr));
         }
     }
 
